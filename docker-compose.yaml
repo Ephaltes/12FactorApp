@@ -10,7 +10,7 @@ services:
       - RedisPassword=redisPassword
       - RedisEndpoint= TwelveFactorApp_redis:6379
     ports:
-      - 8080:43210
+      - 9999:54321
     restart: unless-stopped
 
   redis:
