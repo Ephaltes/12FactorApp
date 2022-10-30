@@ -1,0 +1,21 @@
+version: '2.0'
+services:
+  api:
+    image: ephaltes/twelvefactorapp:latest
+    container_name: TwelveFactorApp_api
+    depends_on:
+      - redis
+    environment:
+      - RedisUser=default
+      - RedisPassword=redisPassword
+      - RedisEndpoint= TwelveFactorApp_redis:6379
+    ports:
+      - 8080:43210
+    restart: unless-stopped
+
+  redis:
+    container_name: TwelveFactorApp_redis
+    image: redis:alpine
+    environment:
+      - REDIS_PASSWORD=redisPassword
+    restart: unless-stopped

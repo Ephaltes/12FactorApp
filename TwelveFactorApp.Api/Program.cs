@@ -11,11 +11,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPiCalculator, PiCalculator>();
 builder.Services.AddSingleton<IRedisDatabase, RedisDatabase>();
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.ListenAnyIP(54321);
-//     options.ListenAnyIP(43210, configure => configure.UseHttps());
-// });
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(54321);
+    options.ListenAnyIP(43210, configure => configure.UseHttps());
+});
 
 WebApplication app = builder.Build();
 
