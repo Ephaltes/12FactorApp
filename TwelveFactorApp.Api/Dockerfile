@@ -4,6 +4,7 @@ EXPOSE 54321
 EXPOSE 43210
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+RUN dotnet dev-certs https
 WORKDIR /src
 COPY ["TwelveFactorApp.Api/TwelveFactorApp.Api.csproj", "TwelveFactorApp.Api/"]
 RUN dotnet restore "TwelveFactorApp.Api/TwelveFactorApp.Api.csproj"
@@ -22,5 +23,6 @@ ENV LC_ALL ${LANG}
 
 FROM base AS final
 WORKDIR /app
+COPY --from=publish /root/.dotnet/corefx/cryptography/x509stores/my/* /root/.dotnet/corefx/cryptography/x509stores/my/
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TwelveFactorApp.Api.dll"]
