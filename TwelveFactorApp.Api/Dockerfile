@@ -1,7 +1,7 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 54321
+EXPOSE 43210
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
@@ -13,6 +13,12 @@ RUN dotnet build "TwelveFactorApp.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "TwelveFactorApp.Api.csproj" -c Release -o /app/publish
+
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+ENV TZ=Europe/Berlin
+ENV LANG de_AT.UTF-8
+ENV LANGUAGE ${LANG}
+ENV LC_ALL ${LANG}
 
 FROM base AS final
 WORKDIR /app
